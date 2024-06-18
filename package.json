@@ -1,0 +1,22 @@
+{
+  "name": "node-express-ts",
+  "version": "1.0.0",
+  "description": "ndoe js, express, and typescript biolerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "node-express-ts"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "express",
+    "typescript",
+    "mysql"
+  ],
+  "author": "Phillip Rekhotho",
+  "license": "MIT"
+}
