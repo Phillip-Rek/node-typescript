@@ -9,6 +9,14 @@ export class Users {
 
     static query = DatabaseConnection.query;
 
+    async getAll() {
+        return new Promise((resolve, reject) => {
+            Users.query(`SELECT * FROM ${Users.tableName}`)
+                .then(msg => { resolve(msg) })
+                .catch(err => { reject(err) })
+        })
+    }
+
     static getInstance(tableName: string) {
         Users.tableName = tableName;
         if (this.instance) {
