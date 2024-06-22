@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "perthite-2": "^2.0.9"
   }
 }
