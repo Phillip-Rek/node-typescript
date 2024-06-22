@@ -5,7 +5,9 @@ import { engine } from "perthite-2";
 
 const app = express();
 
-
+app.engine('html', engine(app));
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
