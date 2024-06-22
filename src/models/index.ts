@@ -1,19 +1,26 @@
 import * as mysql from "mysql";
 import { brand } from "../brand";
+import { Table } from "./table";
 
 export class DatabaseConnection {
 
+    // static ready = false;
+
+    private static callbacks: Table[] = [];
     private static conn?: mysql.Connection;
 
     static dbName = brand.brandName.replace(/[ ]+/g, "_");
 
-    private constructor(callbacks: Array<() => {}>) {
-        DatabaseConnection.init(callbacks);
+    private constructor(callbacks: Array<Table>) {
+        DatabaseConnection.callbacks = callbacks;
+        DatabaseConnection.init();
     }
 
 
 
-    static async init(callbacks: Array<() => {}>) {
+    static async init() {
+
+        // DatabaseConnection.ready = false;
 
         DatabaseConnection.conn = mysql.createConnection({
             host: "localhost",
@@ -43,10 +50,12 @@ export class DatabaseConnection {
                     console.log(err)
                 }
                 else {
-                    callbacks.forEach(callback => {
-                        callback();
+                    DatabaseConnection.callbacks.forEach(callback => {
+                        callback.createTable(callback.structure.join(","));
+                        console.log("Connected to database " + this.dbName);
                     });
-                    console.log("Connected to database " + this.dbName);
+
+                    // DatabaseConnection.ready = true;
                 }
             });
         });
@@ -61,22 +70,40 @@ export class DatabaseConnection {
         })
     }
 
-    static getConnection(callbacks: Array<() => any>): mysql.Connection | undefined {
-        if (this.conn) { return this.conn }
+    static async getConnection(callbacks: Array<Table>) {
+        DatabaseConnection.callbacks.push(...callbacks);
+        if (DatabaseConnection.conn) {
+            return this.conn
+        }
         else {
 
-            DatabaseConnection.init(callbacks);
+            DatabaseConnection.init();
 
 
             if (this.conn) { return this.conn }
 
         }
     }
-}
 
-// REGISTERING DATABASE TABLES
-DatabaseConnection.getConnection([
-    // Posts.createTable,
-    // Visits.createTable,
-    // Quotes.createTable
-]);
+    static query = (query: string) => new Promise((resolve, reject) => {
+        try {
+            if (DatabaseConnection.conn) {
+
+                DatabaseConnection.conn.query(query, (err, data) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    else {
+                        resolve(data)
+                    }
+                })
+            }
+            else {
+                reject("There is no database connection")
+            }
+        }
+        catch (err: unknown) {
+            reject(err)
+        }
+    })
+}
