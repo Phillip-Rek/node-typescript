@@ -1,13 +1,10 @@
-import { Quote } from "../models/quotes";
 import { quotesServices } from "../services/quotes.services";
 import { Request, Response } from "express";
 
 export class QuotesController {
 
-    constructor() { }
-
     async getAll(req: Request, res: Response) {
-        return await quotesServices.getAll();
+        return res.render("quotes", { quotes: await quotesServices.getAll() });
     }
 
     async createOne(req: Request, res: Response) {
@@ -22,6 +19,14 @@ export class QuotesController {
 
         return res.send(await quotesServices.createOne(quote));
 
+    }
+
+    async update(req: Request, res: Response) {
+        throw new Error("not implemented");
+    }
+
+    async delete(req: Request, res: Response) {
+        throw new Error("not implemented");
     }
 }
 
