@@ -9,7 +9,9 @@ export class QuotesController {
 
     async createOne(req: Request, res: Response) {
 
-        if (!(req.body.name && req.body.message)) return
+        if (!(req.body.name && req.body.message)) {
+            return res.status(400).send("Bad Request");
+        }
 
         const quote = {
             name: req.body.name,
