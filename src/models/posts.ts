@@ -53,6 +53,10 @@ class Posts extends Table {
         })
     }
 
+    async deleteOne(id: number) {
+        throw new Error("Posts -> deleteOne() not implemented");
+    }
+
 }
 
 export const posts = new Posts();
