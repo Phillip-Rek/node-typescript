@@ -27,8 +27,8 @@ class Posts extends Table {
 
     async createOne(post: Omit<Post, "id">) {
         return new Promise((resolve, reject) => {
-            this.query(`INSERT INTO ${this.tableName}(\`title\`, \`description\`, \`body\`)
-                VALUES('${post.title}', '${post.description}', '${post.body}')`
+            this.query(`INSERT INTO ${this.tableName}(\`title\`, \`description\`, \`body\`) VALUES(?, ?, ?)`,
+                [post.title, post.description, post.body]
             )
                 .then(msg => { resolve(msg) })
                 .catch(err => { reject(err) })
