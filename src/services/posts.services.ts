@@ -17,6 +17,10 @@ class PostsServices {
     async deleteOne(id: number) {
         return posts.deleteOne(id);
     }
+
+    async getOne(id: number) {
+        return posts.getOne(id);
+    }
 }
 
 export const postsServices = new PostsServices();
