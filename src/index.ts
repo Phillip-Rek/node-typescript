@@ -1,7 +1,7 @@
 import express from "express";
 import methodOverride from "method-override";
 import { indexRouter } from "./routes/index";
-import { quotesRoutes } from "./routes/quotes";
+import { QuotesRoutes } from "./routes/quotes";
 import { engine } from "perthite-2";
 import { overridePostMethod } from "./middlewares/method-override";
 
@@ -14,9 +14,9 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride(overridePostMethod))
+app.use(methodOverride(overridePostMethod));
 
-app.use("/quotes", quotesRoutes);
+app.use("/quotes", QuotesRoutes);
 
 app.use("/", indexRouter);
 
