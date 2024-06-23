@@ -26,7 +26,9 @@ export class PostsController implements Controller {
         return res.render("posts", { quotes: await postsServices.getAll() });
     }
 
+    async readOne(req: Request, res: Response) {
 
+    }
 
     async createOne(req: Request, res: Response) {
         if (!req.body.title || !req.body.description || !req.body.body) {
