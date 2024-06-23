@@ -10,7 +10,7 @@ class PostsServices {
         return posts.createOne(post);
     }
 
-    async update(post: Omit<Post, "date">) {
+    async updateOne(post: Omit<Post, "date">) {
         return posts.update(post);
     }
 }
