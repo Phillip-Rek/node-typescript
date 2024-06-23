@@ -85,11 +85,11 @@ export class DatabaseConnection {
         }
     }
 
-    static query = (query: string) => new Promise((resolve, reject) => {
+    static query = (query: string, args: any[] = []) => new Promise((resolve, reject) => {
         try {
             if (DatabaseConnection.conn) {
 
-                DatabaseConnection.conn.query(query, (err, data) => {
+                DatabaseConnection.conn.query(query, args, (err, data) => {
                     if (err) {
                         reject(err)
                     }
