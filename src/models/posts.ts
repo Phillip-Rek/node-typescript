@@ -53,6 +53,14 @@ class Posts extends Table {
         })
     }
 
+    async getOne(id: number) {
+        return new Promise((resolve, reject) => {
+            this.query(`SELECT * FROM ${this.tableName} WHERE \`id\`=?`, [id])
+                .then(msg => { resolve(msg) })
+                .catch(err => { reject(err) })
+        })
+    }
+
     async deleteOne(id: number) {
         throw new Error("Posts -> deleteOne() not implemented");
     }
