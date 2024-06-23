@@ -12,6 +12,10 @@ export class QuotesServices {
     async getAll() {
         return quotes.getAll();
     }
+
+    async update(quote: Omit<Quote, "date">) {
+        return quotes.update(quote);
+    }
 }
 
 export const quotesServices = new QuotesServices();
