@@ -24,7 +24,17 @@ export class QuotesController {
     }
 
     async update(req: Request, res: Response) {
-        throw new Error("not implemented");
+        if (!(req.body.name && req.body.message)) {
+            return res.status(400).send("Bad Request");
+        }
+
+        const quote = {
+            id: parseInt(req.params.id),
+            name: req.body.name,
+            message: req.body.message
+        }
+
+        return res.send(await quotesServices.update(quote))
     }
 
     async delete(req: Request, res: Response) {
