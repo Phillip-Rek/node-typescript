@@ -1,4 +1,4 @@
-import { DatabaseConnection, Table } from "./index";
+import { Table } from "./index";
 
 export declare type Quote = {
     id: number,
