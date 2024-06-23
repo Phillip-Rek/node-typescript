@@ -19,4 +19,4 @@ class PostsServices {
     }
 }
 
-const postsServices = new PostsServices();
+export const postsServices = new PostsServices();
