@@ -1,5 +1,5 @@
 import express from "express";
-const methodOverride = require('method-override');
+import methodOverride from "method-override";
 import { indexRouter } from "./routes/index";
 import { quotesRoutes } from "./routes/quotes";
 import { engine } from "perthite-2";
