@@ -3,16 +3,16 @@ import { QuotesController } from "../controllers/quotes.controller";
 
 const quotesController = new QuotesController();
 
-const quotesRoutes = Router();
+const QuotesRoutes = Router();
 
-quotesRoutes.get("/", quotesController.getAll);
+QuotesRoutes.get("/", quotesController.getAll);
 
-quotesRoutes.post("/", quotesController.createOne);
+QuotesRoutes.post("/", quotesController.createOne);
 
-quotesRoutes.put("/:id", quotesController.update);
+QuotesRoutes.put("/:id", quotesController.update);
 
-quotesRoutes.delete("/:id", quotesController.delete);
+QuotesRoutes.delete("/:id", quotesController.delete);
 
 export {
-    quotesRoutes
+    QuotesRoutes
 }
