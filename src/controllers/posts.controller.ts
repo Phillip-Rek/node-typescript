@@ -21,18 +21,19 @@ export class PostsController implements Controller {
     }
 
     async createOne(req: Request, res: Response) {
-        throw new Error("Method not implemented.");
-        // if (!(req.body.name && req.body.message)) {
-        //     return res.status(400).send("Bad Request");
-        // }
+        // throw new Error("Method not implemented.");
+        if (!req.body.title || !req.body.description || !req.body.body) {
+            return res.status(400).send("Bad Request");
+        }
 
-        // const post = {
-        //     name: req.body.name,
-        //     message: req.body.message,
-        //     date: new Date()
-        // }
+        const post = {
+            title: req.body.title,
+            description: req.body.description,
+            body: req.body.body,
+            date: new Date()
+        }
 
-        // return res.send(await postsServices.createOne(post));
+        return res.send(await postsServices.createOne(post));
 
     }
 }
