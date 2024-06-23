@@ -13,6 +13,10 @@ class PostsServices {
     async updateOne(post: Omit<Post, "date">) {
         return posts.update(post);
     }
+
+    async deleteOne(id: number) {
+        return posts.delete(id);
+    }
 }
 
 const postsServices = new PostsServices();
