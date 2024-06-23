@@ -26,8 +26,9 @@ class Quotes extends Table {
 
     async createOne(user: Omit<Quote, "id">) {
         return new Promise((resolve, reject) => {
-            this.query(`INSERT INTO ${this.tableName}(\`name\`, \`message\`)
-                VALUES('${user.name}', '${user.message}')`
+            this.query(
+                `INSERT INTO ${this.tableName}(\`name\`, \`message\`)
+                VALUES(?, ?)`, [user.name, user.message]
             )
                 .then(msg => { resolve(msg) })
                 .catch(err => { reject(err) })
