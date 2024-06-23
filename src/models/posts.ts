@@ -35,6 +35,14 @@ class Posts extends Table {
         })
     }
 
+    async getAll() {
+        return new Promise((resolve, reject) => {
+            this.query(`SELECT * FROM ${this.tableName}`)
+                .then(msg => { resolve(msg) })
+                .catch(err => { reject(err) })
+        })
+    }
+
 }
 
 export const posts = new Posts();
