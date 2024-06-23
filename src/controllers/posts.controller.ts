@@ -15,6 +15,9 @@ export abstract class Controller {
     async deleteOne(req: Request, res: Response): Promise<unknown> {
         throw new Error("Method not implemented");
     };
+    async readOne(req: Request, res: Response): Promise<unknown> {
+        throw new Error("Method not implemented");
+    };
 }
 
 export class PostsController implements Controller {
@@ -22,6 +25,8 @@ export class PostsController implements Controller {
     async index(req: Request, res: Response) {
         return res.render("posts", { quotes: await postsServices.getAll() });
     }
+
+
 
     async createOne(req: Request, res: Response) {
         if (!req.body.title || !req.body.description || !req.body.body) {
@@ -44,7 +49,6 @@ export class PostsController implements Controller {
         if (!req.body.title || !req.body.description || !req.body.body || Number.isNaN(id)) {
             return res.status(400).send("Bad Request");
         }
-
 
         const post = {
             title: req.body.title,

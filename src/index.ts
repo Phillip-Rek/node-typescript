@@ -19,12 +19,9 @@ app.use(methodOverride(overridePostMethod));
 
 app.use("/quotes", QuotesRoutes);
 app.use("/posts", PostsRouter);
-
 app.use("/", indexRouter);
 
-app.all("*", (req, res) => {
-    res.status(404).send("Page Not Found")
-})
+app.all("*", (req, res) => { res.status(404).send("Page Not Found") })
 
 process.env.NODE_ENV = "development";
 app.listen(3000);
