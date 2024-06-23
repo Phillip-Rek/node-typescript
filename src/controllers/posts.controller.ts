@@ -27,7 +27,11 @@ export class PostsController implements Controller {
     }
 
     async readOne(req: Request, res: Response) {
-        return res.send(await postsServices.getOne());
+        const id = parseInt(req.params.id);
+
+        if (Number.isNaN(id)) { return res.status(400).send("Bad Request"); }
+
+        return res.send(await postsServices.getOne(id));
     }
 
     async createOne(req: Request, res: Response) {
