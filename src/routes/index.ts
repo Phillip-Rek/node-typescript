@@ -10,5 +10,4 @@ export {
 }
 
 
-// app.get("/", (req, { send }) => { send("hello world") })
 
