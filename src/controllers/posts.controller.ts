@@ -27,7 +27,7 @@ export class PostsController implements Controller {
     }
 
     async readOne(req: Request, res: Response) {
-
+        return res.send(await postsServices.getOne());
     }
 
     async createOne(req: Request, res: Response) {
