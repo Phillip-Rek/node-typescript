@@ -23,7 +23,6 @@ class Posts extends Table {
 
     constructor() {
         super();
-
     }
 
 
