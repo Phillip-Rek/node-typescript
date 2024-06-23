@@ -8,7 +8,7 @@ export abstract class Controller {
     deleteOne(req: Request, res: Response) { throw new Error("Method not implemented"); };
 }
 
-export class PostsController {
+export class PostsController implements Controller {
     updateOne(req: Request, res: Response): void {
         throw new Error("Method not implemented.");
     }
