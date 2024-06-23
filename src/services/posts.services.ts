@@ -15,7 +15,7 @@ class PostsServices {
     }
 
     async deleteOne(id: number) {
-        return posts.delete(id);
+        return posts.deleteOne(id);
     }
 }
 
