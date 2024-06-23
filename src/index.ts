@@ -3,6 +3,7 @@ const methodOverride = require('method-override');
 import { indexRouter } from "./routes/index";
 import { quotesRoutes } from "./routes/quotes";
 import { engine } from "perthite-2";
+import { overridePostMethod } from "./middlewares/method-override";
 
 const app = express();
 
@@ -13,14 +14,7 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride((req: { body: { _method: any; }; }, res: any) => {
-    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-        // look in urlencoded POST bodies and delete it
-        var method = req.body._method
-        delete req.body._method
-        return method
-    }
-}))
+app.use(methodOverride(overridePostMethod))
 
 app.use("/quotes", quotesRoutes);
 
