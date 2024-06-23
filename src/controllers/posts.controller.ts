@@ -9,7 +9,7 @@ export abstract class Controller {
 }
 
 export class PostsController implements Controller {
-    updateOne(req: Request, res: Response) {
+    async updateOne(req: Request, res: Response) {
         if (!req.body.title || !req.body.description || !req.body.body) {
             return res.status(400).send("Bad Request");
         }
@@ -23,7 +23,8 @@ export class PostsController implements Controller {
 
         return res.send(await postsServices.createOne(post));
     }
-    deleteOne(req: Request, res: Response): void {
+
+    async deleteOne(req: Request, res: Response) {
         throw new Error("Method not implemented.");
     }
 
