@@ -3,14 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Quotes</title>
 </head>
 <body>
-    {% for(let quote of quotes) %}
-        <div>
-            <p>{{ quote.name }}</p>
-            <p>{{ quote.message }}</p>
-        </div>
-    {% end_for %}
+    <h1>Quotes</h1>
+    <div style="background-color: #eeef;">
+        {% for(let quote of quotes) %}
+            <div>
+                <p>{{ quote.name }}</p>
+                <p>{{ quote.message }}</p>
+            </div>
+        {% end_for %}
+    </div>
+
+    <div style="background-color: #eeef;">
+        <h2>Create Quote</h2>
+
+        <form action="/quotes" method="post">
+            <label for="name"></label>
+            <input id="name" name="name" type="text">
+            <label for="message"></label>
+            <textarea name="message" id="message" cols="30" rows="10"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div style="background-color: #eeef;">
+        <h2>Edit Quote</h2>
+        
+        <form action="/quotes/${quotes[quotes.length-1].id}" method="post">
+            <!-- <input type="hidden" name="id" value="${quotes[quotes.length-1].id}"> -->
+            <input type="hidden" name="_method" value="put">
+            <label for="name"></label>
+            <input value="${quotes[quotes.length-1].name}" id="name" name="name" type="text">
+            <label for="message"></label>
+            <textarea name="message" id="message" cols="30" rows="10">{{ quotes[quotes.length-1].message }}</textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
 </body>
 </html>
