@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { postsServices } from "../services/posts.services";
 
-
+export abstract class Controller {
+    index(req: Request, res: Response) { throw new Error("Method not implemented"); };
+    createOne(req: Request, res: Response) { throw new Error("Method not implemented"); };
+    updateOne(req: Request, res: Response) { throw new Error("Method not implemented"); };
+    deleteOne(req: Request, res: Response) { throw new Error("Method not implemented"); };
+}
 
 export class PostsController {
     updateOne(req: Request, res: Response): void {
