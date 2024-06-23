@@ -2,18 +2,17 @@ import { Router } from "express";
 import { PostsController } from "../controllers/posts.controller";
 
 
-const PostsRoute = Router();
+const PostsRouter = Router();
 
 const { updateOne, deleteOne, index, createOne } = new PostsController();
 
-PostsRoute.get("/", index);
+PostsRouter.get("/", index);
 
-PostsRoute.post("/", createOne);
+PostsRouter.post("/", createOne);
 
-PostsRoute.put("/:id", updateOne);
+PostsRouter.put("/:id", updateOne);
 
-PostsRoute.delete("/:id", deleteOne);
+PostsRouter.delete("/:id", deleteOne);
 
-export {
-    PostsRoute
-}
+
+export { PostsRouter }
