@@ -9,6 +9,10 @@ class PostsServices {
     async createOne(post: Omit<Post, "id">) {
         return posts.createOne(post);
     }
+
+    async update(post: Omit<Post, "date">) {
+        return posts.update(post);
+    }
 }
 
 const postsServices = new PostsServices();
