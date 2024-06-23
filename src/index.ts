@@ -4,6 +4,7 @@ import { indexRouter } from "./routes/index";
 import { QuotesRoutes } from "./routes/quotes";
 import { engine } from "perthite-2";
 import { overridePostMethod } from "./middlewares/method-override";
+import { PostsRouter } from "./routes/posts";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride(overridePostMethod));
 
 app.use("/quotes", QuotesRoutes);
+app.use("/posts", PostsRouter);
 
 app.use("/", indexRouter);
 
