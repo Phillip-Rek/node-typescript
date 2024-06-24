@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { PostsController } from "../controllers/posts.controller";
+import { postsServices } from "../services/posts.services";
 
 const PostsRouter = Router();
 
-const { updateOne, deleteOne, index, createOne, readOne } = new PostsController();
+const { updateOne, deleteOne, index, createOne, readOne } = new PostsController(postsServices);
 
 PostsRouter.get("/", index);
 
