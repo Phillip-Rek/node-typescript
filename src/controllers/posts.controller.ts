@@ -1,26 +1,19 @@
 import { Request, Response } from "express";
 import { postsServices } from "../services/posts.services";
-import { posts } from "../models/posts";
-
-export abstract class Controller {
-    async index(req: Request, res: Response): Promise<unknown> {
-        throw new Error("Method not implemented");
-    };
-    async createOne(req: Request, res: Response): Promise<unknown> {
-        throw new Error("Method not implemented");
-    };
-    async updateOne(req: Request, res: Response): Promise<unknown> {
-        throw new Error("Method not implemented");
-    };
-    async deleteOne(req: Request, res: Response): Promise<unknown> {
-        throw new Error("Method not implemented");
-    };
-    async readOne(req: Request, res: Response): Promise<unknown> {
-        throw new Error("Method not implemented");
-    };
-}
+import { Controller } from "./controller";
 
 export class PostsController implements Controller {
+
+    constructor() {
+        for (let i = 0; i < 5; i++) {
+            postsServices.createOne({
+                title: "hello world post number " + i,
+                description: "describing a hello world blog post number " + i,
+                body: "more content on hello world blog post. more content on hello world blog post. more content on hello world blog post. more content on hello world blog post. ",
+                date: new Date()
+            })
+        }
+    }
 
     async index(req: Request, res: Response) {
         return res.render("posts", { quotes: await postsServices.getAll() });
@@ -39,14 +32,14 @@ export class PostsController implements Controller {
             return res.status(400).send("Bad Request");
         }
 
-        const post = {
-            title: req.body.title,
-            description: req.body.description,
-            body: req.body.body,
-            date: new Date()
-        }
-
-        return res.send(await postsServices.createOne(post));
+        return res.send(
+            await postsServices.createOne({
+                title: req.body.title,
+                description: req.body.description,
+                body: req.body.body,
+                date: new Date()
+            })
+        );
     }
 
     async updateOne(req: Request, res: Response) {
@@ -56,15 +49,14 @@ export class PostsController implements Controller {
             return res.status(400).send("Bad Request");
         }
 
-        const post = {
-            title: req.body.title,
-            description: req.body.description,
-            body: req.body.body,
-            date: new Date(),
-            id
-        }
-
-        return res.send(await postsServices.updateOne(post));
+        return res.send(
+            await postsServices.updateOne({
+                title: req.body.title,
+                description: req.body.description,
+                body: req.body.body,
+                id
+            })
+        );
     }
 
     async deleteOne(req: Request, res: Response) {
