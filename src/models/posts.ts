@@ -45,7 +45,7 @@ class Posts extends Table {
 
     async update(post: Omit<Post, "date">) {
         return new Promise((resolve, reject) => {
-            this.query(`UPDATE ${this.tableName} SET \`title\`=?, \`description\`=?, \`body\`=? WHERE \`id\`=?`,
+            this.query(`UPDATE ${this.tableName} SET \`title\`=?, \`description\`=?, \`body\`=? WHERE \`id\`='${post.id}'`,
                 [post.title, post.description, post.body]
             )
                 .then(res => { resolve(res) })
