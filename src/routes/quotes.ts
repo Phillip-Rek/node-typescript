@@ -5,13 +5,13 @@ const quotesController = new QuotesController();
 
 const QuotesRoutes = Router();
 
-QuotesRoutes.get("/", quotesController.getAll);
+QuotesRoutes.get("/", quotesController.index);
 
 QuotesRoutes.post("/", quotesController.createOne);
 
-QuotesRoutes.put("/:id", quotesController.update);
+QuotesRoutes.put("/:id", quotesController.updateOne);
 
-QuotesRoutes.delete("/:id", quotesController.delete);
+QuotesRoutes.delete("/:id", quotesController.deleteOne);
 
 export {
     QuotesRoutes
