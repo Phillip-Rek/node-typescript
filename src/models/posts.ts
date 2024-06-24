@@ -67,5 +67,6 @@ class Posts extends Table {
 
 }
 
+export declare type PostsModels = Posts;
 export const posts = new Posts();
 
