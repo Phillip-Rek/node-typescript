@@ -4,16 +4,16 @@ import { postsServices } from "../services/posts.services";
 
 const PostsRouter = Router();
 
-const { updateOne, deleteOne, index, createOne, readOne } = PostsController.getInstance(postsServices);
+const postsController = PostsController.getInstance(postsServices);
 
-PostsRouter.get("/", index);
+PostsRouter.get("/", postsController.index);
 
-PostsRouter.get("/:id", readOne);
+PostsRouter.get("/:id", postsController.readOne);
 
-PostsRouter.post("/", createOne);
+PostsRouter.post("/", postsController.createOne);
 
-PostsRouter.put("/:id", updateOne);
+PostsRouter.put("/:id", postsController.updateOne);
 
-PostsRouter.delete("/:id", deleteOne);
+PostsRouter.delete("/:id", postsController.deleteOne);
 
 export { PostsRouter }
