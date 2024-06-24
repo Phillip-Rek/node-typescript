@@ -1,26 +1,30 @@
-import { posts, Post } from "../models/posts";
+import { posts, Post, PostsModels } from "../models/posts";
 
-class PostsServices {
+class Posts {
+
+    constructor(private posts: PostsModels) { }
 
     async getAll() {
-        return posts.getAll();
+        return this.posts.getAll();
     }
 
     async createOne(post: Omit<Post, "id">) {
-        return posts.createOne(post);
+        return this.posts.createOne(post);
     }
 
     async updateOne(post: Omit<Post, "date">) {
-        return posts.update(post);
+        return this.posts.update(post);
     }
 
     async deleteOne(id: number) {
-        return posts.deleteOne(id);
+        return this.posts.deleteOne(id);
     }
 
     async getOne(id: number) {
-        return posts.getOne(id);
+        return this.posts.getOne(id);
     }
 }
 
-export const postsServices = new PostsServices();
+export declare type PostsServices = Posts;
+
+export const postsServices = new Posts(posts);
