@@ -74,5 +74,3 @@ export class PostsController implements Controller {
         return res.send(await PostsController.postsServices.deleteOne(id));
     }
 }
-
-export const postsController = PostsController.getInstance(postsServices);
