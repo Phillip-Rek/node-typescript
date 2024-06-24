@@ -4,7 +4,7 @@ import { postsServices } from "../services/posts.services";
 
 const PostsRouter = Router();
 
-const { updateOne, deleteOne, index, createOne, readOne } = new PostsController(postsServices);
+const { updateOne, deleteOne, index, createOne, readOne } = PostsController.getInstance(postsServices);
 
 PostsRouter.get("/", index);
 
