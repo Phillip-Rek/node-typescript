@@ -1,15 +1,29 @@
 import { Request, Response } from "express";
 import { Controller } from "./controller";
-import { PostsServices } from "../services/posts.services";
+import { postsServices, PostsServices } from "../services/posts.services";
 
 export class PostsController implements Controller {
 
-    constructor(private postsServices: PostsServices) {
+    static instance?: PostsController;
+    private static postsServices: PostsServices;
 
+    private constructor(postsServices: PostsServices) {
+        PostsController.postsServices = postsServices;
+    }
+
+    static getInstance(service: PostsServices) {
+        if (this.instance) return this.instance;
+        else {
+            this.instance = new PostsController(service);
+            return this.instance;
+        }
     }
 
     async index(req: Request, res: Response) {
-        return res.render("posts", { posts: await this.postsServices.getAll() });
+
+        const posts = await PostsController.postsServices.getAll();
+
+        return res.render("posts", { posts });
     }
 
     async readOne(req: Request, res: Response) {
@@ -17,7 +31,7 @@ export class PostsController implements Controller {
 
         if (Number.isNaN(id)) { return res.status(400).send("Bad Request"); }
 
-        return res.send(await this.postsServices.getOne(id));
+        return res.send(await PostsController.postsServices.getOne(id));
     }
 
     async createOne(req: Request, res: Response) {
@@ -25,14 +39,14 @@ export class PostsController implements Controller {
             return res.status(400).send("Bad Request");
         }
 
-        return res.send(
-            await this.postsServices.createOne({
-                title: req.body.title,
-                description: req.body.description,
-                body: req.body.body,
-                date: new Date()
-            })
-        );
+        const post = {
+            title: req.body.title,
+            description: req.body.description,
+            body: req.body.body,
+            date: new Date()
+        }
+
+        return res.send(await PostsController.postsServices.createOne(post));
     }
 
     async updateOne(req: Request, res: Response) {
@@ -43,7 +57,7 @@ export class PostsController implements Controller {
         }
 
         return res.send(
-            await this.postsServices.updateOne({
+            await PostsController.postsServices.updateOne({
                 title: req.body.title,
                 description: req.body.description,
                 body: req.body.body,
@@ -57,6 +71,8 @@ export class PostsController implements Controller {
 
         if (Number.isNaN(id)) { return res.status(400).send("Invalid id") }
 
-        return res.send(await this.postsServices.deleteOne(id));
+        return res.send(await PostsController.postsServices.deleteOne(id));
     }
 }
+
+export const postsController = PostsController.getInstance(postsServices);
