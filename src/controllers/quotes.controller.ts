@@ -1,10 +1,14 @@
 import { quotesServices } from "../services/quotes.services";
 import { Request, Response } from "express";
+import { Controller } from "./controller";
 
-export class QuotesController {
-
-    async getAll(req: Request, res: Response) {
+export class QuotesController implements Controller {
+    async index(req: Request, res: Response) {
         return res.render("quotes", { quotes: await quotesServices.getAll() });
+    }
+
+    async readOne(req: Request, res: Response): Promise<unknown> {
+        throw new Error("Method not implemented.");
     }
 
     async createOne(req: Request, res: Response) {
@@ -23,7 +27,7 @@ export class QuotesController {
 
     }
 
-    async update(req: Request, res: Response) {
+    async updateOne(req: Request, res: Response) {
         if (!(req.body.name && req.body.message)) {
             return res.status(400).send("Bad Request");
         }
@@ -37,7 +41,7 @@ export class QuotesController {
         return res.send(await quotesServices.update(quote))
     }
 
-    async delete(req: Request, res: Response) {
+    async deleteOne(req: Request, res: Response) {
         throw new Error("not implemented");
     }
 }
