@@ -1,36 +1,24 @@
 import { posts, Post, PostsModels } from "../models/posts";
-
 export class PostsServices {
-
-    static instance?: PostsServices;
-
-    private constructor(private posts: PostsModels) { }
-
-    static getInstance(postsModels: PostsModels) {
-        if (this.instance) return this.instance;
-        else {
-            this.instance = new PostsServices(postsModels);
-            return this.instance;
-        }
-    }
+    constructor(private posts: PostsModels) { }
 
     async getAll() {
-        return this.posts.getAll();
+        return await this.posts.getAll();
     }
 
     async createOne(post: Omit<Post, "id">) {
-        return this.posts.createOne(post);
+        return await this.posts.createOne(post);
     }
 
-    async updateOne(post: Omit<Post, "date">) {
-        return this.posts.update(post);
+    async updateOne(id: number, post: Partial<Omit<Post, "id">>) {
+        return await this.posts.updateOne(id, post);
     }
 
     async deleteOne(id: number) {
-        return this.posts.deleteOne(id);
+        return await this.posts.deleteOne(id);
     }
 
-    async getOne(id: number) {
-        return this.posts.getOne(id);
+    async getOne(post: Partial<Post>) {
+        return await this.posts.getOne(post);
     }
 }
