@@ -116,15 +116,19 @@ export class Table {
         DatabaseConnection.getConnection([this]);
     }
 
+    protected createOneQueryBuilder(object: Object) {
+
+    }
+
     protected getAllQueryBuilder() {
         return `SELECT * FROM ${this.tableName}`;
     }
 
-    protected getOneQueryBuiler(post: Object) {
+    protected getOneQueryBuiler(object: Object) {
         const keys: string[] = [];
         const values: any[] = [];
 
-        for (const [key, val] of Object.entries(post)) {
+        for (const [key, val] of Object.entries(object)) {
             if (val) {
                 keys.push(key)
                 values.push(val);
@@ -150,6 +154,7 @@ export class Table {
                 addComma = true;
 
                 queryString += `\`${key}\`=?`;
+
                 values.push(val);
 
             }
@@ -157,17 +162,13 @@ export class Table {
 
         const filterKeys = [];
         const filterValues = [];
-
+        addComma = false;
         for (const [key, val] of Object.entries(filter)) {
             if (val) {
                 if (addComma) { queryString += ", " }
                 filterKeys.push(key)
                 filterValues.push(val)
             }
-        }
-
-        if (queryString.trimEnd().endsWith(",")) {
-            queryString = queryString.trimEnd().substring(0, queryString.length - 2);
         }
 
         queryString += ` WHERE \`${filterKeys[0]}\`='${filterValues[0]}'`;
