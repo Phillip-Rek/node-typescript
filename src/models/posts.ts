@@ -5,7 +5,7 @@ export declare type Post = {
     title: string,
     description: string,
     body: string,
-    date: Date
+    date: string
 }
 
 class Posts extends Table {
@@ -43,19 +43,31 @@ class Posts extends Table {
         })
     }
 
-    async update(post: Omit<Post, "date">) {
+    async updateOne(id: number, post: Partial<Omit<Post, "id">>) {
+
+        const { query, values } = this.updateQueryBuilder({ id }, post);
+
         return new Promise((resolve, reject) => {
-            this.query(`UPDATE ${this.tableName} SET \`title\`=?, \`description\`=?, \`body\`=? WHERE \`id\`='${post.id}'`,
-                [post.title, post.description, post.body]
-            )
+            this.query(query, values)
                 .then(res => { resolve(res) })
                 .catch(err => { reject(err) })
         })
     }
 
-    async getOne(id: number) {
+    async getOne(post: Partial<Post>) {
+
+        const keys: string[] = []
+        const values: any[] = [];
+
+        for (const [key, val] of Object.entries(post)) {
+            if (val) {
+                keys.push(key)
+                values.push(val);
+            }
+        }
+
         return new Promise((resolve, reject) => {
-            this.query(`SELECT * FROM ${this.tableName} WHERE \`id\`=?`, [id])
+            this.query(`SELECT * FROM ${this.tableName} WHERE \`${keys[0]}\`=?`, [values[0]])
                 .then(msg => { resolve(msg) })
                 .catch(err => { reject(err) })
         })
