@@ -35,7 +35,7 @@ class Posts extends Table {
 
     async getAll() {
         return new Promise((resolve, reject) => {
-            this.query(`SELECT * FROM ${this.tableName}`)
+            this.query(this.getAllQueryBuilder())
                 .then(msg => { resolve(msg) })
                 .catch(err => { reject(err) })
         })
