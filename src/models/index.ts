@@ -116,6 +116,10 @@ export class Table {
         DatabaseConnection.getConnection([this]);
     }
 
+    protected getAllQueryBuilder() {
+        return `SELECT * FROM ${this.tableName}`;
+    }
+
     protected getOneQueryBuiler(post: Object) {
         const keys: string[] = [];
         const values: any[] = [];
