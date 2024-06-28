@@ -13,11 +13,8 @@ export class PostsController implements Controller {
     }
 
     static getInstance(service: PostsServices) {
-        if (this.instance) return this.instance;
-        else {
-            this.instance = new PostsController(service);
-            return this.instance;
-        }
+        if (!this.instance) { this.instance = new PostsController(service); }
+        return this.instance;
     }
 
     async index(req: Request, res: Response) {
