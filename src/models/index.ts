@@ -1,6 +1,7 @@
 import * as mysql from "mysql";
 import { brand } from "../brand";
 import { query } from "express";
+import { Post } from "./posts";
 export class DatabaseConnection {
 
     // static ready = false;
@@ -109,10 +110,28 @@ export class DatabaseConnection {
 
 
 export class Table {
-    tableName: string = "";
+    protected tableName: string = "";
     structure: string[] = [];
     constructor() {
         DatabaseConnection.getConnection([this]);
+    }
+
+    protected getOneQueryBuiler(post: Object) {
+        const keys: string[] = [];
+        const values: any[] = [];
+
+        for (const [key, val] of Object.entries(post)) {
+            if (val) {
+                keys.push(key)
+                values.push(val);
+            }
+        }
+
+        const query = `SELECT * FROM ${this.tableName} WHERE \`${keys[0]}\`=?`
+
+
+
+        return { query, values }
     }
 
     protected updateQueryBuilder(filter: Object, object: Object) {
@@ -170,6 +189,7 @@ export class Table {
         })
     }
 
-    query = DatabaseConnection.query;
+    protected query = DatabaseConnection.query;
 
 }
+
