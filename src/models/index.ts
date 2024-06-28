@@ -1,5 +1,6 @@
 import * as mysql from "mysql";
 import { brand } from "../brand";
+import { query } from "express";
 export class DatabaseConnection {
 
     // static ready = false;
@@ -112,6 +113,43 @@ export class Table {
     structure: string[] = [];
     constructor() {
         DatabaseConnection.getConnection([this]);
+    }
+
+    protected updateQueryBuilder(filter: Object, object: Object) {
+        let queryString = `UPDATE ${this.tableName} SET `
+        const values: any = [];
+
+        let addComma = false;
+
+        for (const [key, val] of Object.entries(object)) {
+            if (val) {
+                if (addComma) { queryString += ", " }
+                addComma = true;
+
+                queryString += `\`${key}\`=?`;
+                values.push(val);
+
+            }
+        }
+
+        const filterKeys = [];
+        const filterValues = [];
+
+        for (const [key, val] of Object.entries(filter)) {
+            if (val) {
+                if (addComma) { queryString += ", " }
+                filterKeys.push(key)
+                filterValues.push(val)
+            }
+        }
+
+        if (queryString.trimEnd().endsWith(",")) {
+            queryString = queryString.trimEnd().substring(0, queryString.length - 2);
+        }
+
+        queryString += ` WHERE \`${filterKeys[0]}\`='${filterValues[0]}'`;
+
+        return { query: queryString, values };
     }
 
     async createTable(tableStructure: string): Promise<string> {
