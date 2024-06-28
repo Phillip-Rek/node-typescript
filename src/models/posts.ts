@@ -21,9 +21,7 @@ class Posts extends Table {
         'PRIMARY KEY (\`id\`)'
     ]
 
-    constructor() {
-        super();
-    }
+    constructor() { super(); }
 
     async createOne(post: Omit<Post, "id">) {
         return new Promise((resolve, reject) => {
@@ -56,18 +54,10 @@ class Posts extends Table {
 
     async getOne(post: Partial<Post>) {
 
-        const keys: string[] = []
-        const values: any[] = [];
-
-        for (const [key, val] of Object.entries(post)) {
-            if (val) {
-                keys.push(key)
-                values.push(val);
-            }
-        }
+        const { query, values } = this.getOneQueryBuiler(post);
 
         return new Promise((resolve, reject) => {
-            this.query(`SELECT * FROM ${this.tableName} WHERE \`${keys[0]}\`=?`, [values[0]])
+            this.query(query, [values[0]])
                 .then(msg => { resolve(msg) })
                 .catch(err => { reject(err) })
         })
