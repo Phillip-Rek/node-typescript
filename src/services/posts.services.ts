@@ -10,8 +10,8 @@ export class PostsServices {
         return await this.posts.createOne(post);
     }
 
-    async updateOne(id: number, post: Partial<Omit<Post, "id">>) {
-        return await this.posts.updateOne(id, post);
+    async updateOne(filter: Partial<Post>, post: Partial<Omit<Post, "id">>) {
+        return await this.posts.updateOne(filter, post);
     }
 
     async deleteOne(id: number) {
