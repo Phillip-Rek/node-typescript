@@ -7,15 +7,22 @@ const PostsRouter = Router();
 
 const postsServices = new PostsServices(posts)
 
-const postsController = PostsController.getInstance(postsServices);
+const postsController = <PostsController>PostsController.getInstance(postsServices);
 
 const update = async () => {
     console.log(
-        await postsServices.updateOne(1,
+        await postsServices.updateOne(
             {
-                title: "the time is 15:31",
-                date: new Date().toISOString().slice(0, 19).replace('T', ' ')
+                id: 1,
+                title: 'the time is 15:31',
+            },
+            {
+                title: "updated title on id 1",
             })
+    )
+
+    console.log(
+        await postsServices.getOne({ id: 1 })
     )
 }
 
