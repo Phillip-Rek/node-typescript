@@ -2,14 +2,13 @@ import { Request, Response } from "express";
 import { Controller } from "./controller";
 import { PostsServices } from "../services/posts.services";
 
+
 export class PostsController implements Controller {
     private static instance?: PostsController;
     private static postsServices: PostsServices;
 
     private constructor(postsServices: PostsServices) {
         PostsController.postsServices = postsServices;
-
-
     }
 
     static getInstance(service: PostsServices) {
@@ -55,7 +54,7 @@ export class PostsController implements Controller {
         }
 
         return res.send(
-            await PostsController.postsServices.updateOne(id, {
+            await PostsController.postsServices.updateOne({ id }, {
                 title: req.body.title,
                 description: req.body.description,
                 body: req.body.body,
