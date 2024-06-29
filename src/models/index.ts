@@ -159,6 +159,8 @@ export class Table {
 
         }
 
+        if (!Object.entries(filter)[0]) return { query: queryString, values };
+
         const filterKeys = [Object.entries(filter)[0][0]];
         const filterValues = [Object.entries(filter)[0][1]];
 
