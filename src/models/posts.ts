@@ -41,9 +41,9 @@ class Posts extends Table {
         })
     }
 
-    async updateOne(id: number, post: Partial<Omit<Post, "id">>) {
+    async updateOne(filter: Partial<Post>, post: Partial<Omit<Post, "id">>) {
 
-        const { query, values } = this.updateQueryBuilder({ id }, post);
+        const { query, values } = this.updateQueryBuilder(filter, post);
 
         return new Promise((resolve, reject) => {
             this.query(query, values)
