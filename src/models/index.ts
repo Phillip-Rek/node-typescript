@@ -143,10 +143,12 @@ export class Table {
     protected updateQueryBuilder(filter: Object, object: Object) {
         let queryString = `UPDATE ${this.tableName} SET `
 
+        if (!Object.entries(object)[0])
+            throw new Error("Please provide table column and value to update");
+
+
         queryString += `\`${Object.entries(object)[0][0]}\`=?`;
         const values: any = [Object.entries(object)[0][1]];
-
-        if (!Object.entries(object)[0]) return { query: "", values: [] }
 
         for (let i = 1; i < Object.entries(object).length; i++) {
             const [key, val] = Object.entries(object)[i]
