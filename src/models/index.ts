@@ -162,18 +162,18 @@ export class Table {
         const filterKeys = [Object.entries(filter)[0][0]];
         const filterValues = [Object.entries(filter)[0][1]];
 
+        queryString += ` WHERE \`${filterKeys[0]}\`='${filterValues[0]}'`;
+
         for (let i = 1; i < Object.entries(filter).length; i++) {
             const [key, val] = Object.entries(filter)[i];
             if (!val) continue
 
-            queryString += ", "
-            filterKeys.push(key[0])
-            filterValues.push(val[1])
+            filterKeys.push(key)
+            filterValues.push(val)
+
+            queryString += ` AND \`${key}\`='${val}'`;
         }
 
-        queryString += ` WHERE \`${filterKeys[0]}\`='${filterValues[0]}'`;
-
-        console.log(queryString, values)
         return { query: queryString, values };
     }
 
