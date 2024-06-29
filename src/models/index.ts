@@ -1,7 +1,5 @@
 import * as mysql from "mysql";
 import { brand } from "../brand";
-import { query } from "express";
-import { Post } from "./posts";
 export class DatabaseConnection {
 
     // static ready = false;
@@ -144,35 +142,38 @@ export class Table {
 
     protected updateQueryBuilder(filter: Object, object: Object) {
         let queryString = `UPDATE ${this.tableName} SET `
-        const values: any = [];
 
-        let addComma = false;
+        queryString += `\`${Object.entries(object)[0][0]}\`=?`;
+        const values: any = [Object.entries(object)[0][1]];
 
-        for (const [key, val] of Object.entries(object)) {
-            if (val) {
-                if (addComma) { queryString += ", " }
-                addComma = true;
+        if (!Object.entries(object)[0]) return { query: "", values: [] }
 
-                queryString += `\`${key}\`=?`;
+        for (let i = 1; i < Object.entries(object).length; i++) {
+            const [key, val] = Object.entries(object)[i]
+            if (!val) continue
 
-                values.push(val);
+            queryString += ", "
+            queryString += `\`${key}\`=?`;
 
-            }
+            values.push(val);
+
         }
 
-        const filterKeys = [];
-        const filterValues = [];
-        addComma = false;
-        for (const [key, val] of Object.entries(filter)) {
-            if (val) {
-                if (addComma) { queryString += ", " }
-                filterKeys.push(key)
-                filterValues.push(val)
-            }
+        const filterKeys = [Object.entries(filter)[0][0]];
+        const filterValues = [Object.entries(filter)[0][1]];
+
+        for (let i = 1; i < Object.entries(filter).length; i++) {
+            const [key, val] = Object.entries(filter)[i];
+            if (!val) continue
+
+            queryString += ", "
+            filterKeys.push(key[0])
+            filterValues.push(val[1])
         }
 
         queryString += ` WHERE \`${filterKeys[0]}\`='${filterValues[0]}'`;
 
+        console.log(queryString, values)
         return { query: queryString, values };
     }
 
