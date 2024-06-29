@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
 
 export abstract class Controller {
-    async index(req: Request, res: Response): Promise<unknown> {
+    static async index(req: Request, res: Response): Promise<unknown> {
         throw new Error("Method not implemented");
     };
 
-    async createOne(req: Request, res: Response): Promise<unknown> {
+    static async createOne(req: Request, res: Response): Promise<unknown> {
         throw new Error("Method not implemented");
     };
 
-    async updateOne(req: Request, res: Response): Promise<unknown> {
+    static async updateOne(req: Request, res: Response): Promise<unknown> {
         throw new Error("Method not implemented");
     };
 
-    async deleteOne(req: Request, res: Response): Promise<unknown> {
+    static async deleteOne(req: Request, res: Response): Promise<unknown> {
         throw new Error("Method not implemented");
     };
 
-    async readOne(req: Request, res: Response): Promise<unknown> {
+    static async readOne(req: Request, res: Response): Promise<unknown> {
         throw new Error("Method not implemented");
     };
 }
