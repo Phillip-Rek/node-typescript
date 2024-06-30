@@ -1,9 +1,9 @@
-import { Quote, quotes } from "../models/quotes";
+import { Quote, quotes, QuotesModels } from "../models/quotes";
 
 
 export class QuotesServices {
 
-    constructor() { }
+    constructor(quotes: QuotesModels) { }
 
     async createOne(user: Omit<Quote, "id">) {
         return quotes.createOne(user);
@@ -18,4 +18,4 @@ export class QuotesServices {
     }
 }
 
-export const quotesServices = new QuotesServices();
+// export const quotesServices = new QuotesServices();
