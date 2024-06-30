@@ -17,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride(overridePostMethod));
 
+app.disable('x-powered-by');
+
 app.use("/quotes", QuotesRoutes);
 app.use("/posts", PostsRouter);
 app.use("/", indexRouter);
