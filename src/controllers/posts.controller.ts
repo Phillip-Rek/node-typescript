@@ -1,24 +1,18 @@
 import { Request, Response } from "express";
-import { Controller } from "./controller";
 import { PostsServices } from "../services/posts.services";
+import { Singleton } from "../utils/singleton";
 
+@Singleton
+export class PostsController {
+    private postsServices: PostsServices;
 
-export class PostsController implements Controller {
-    private static instance?: PostsController;
-    private static postsServices: PostsServices;
-
-    private constructor(postsServices: PostsServices) {
-        PostsController.postsServices = postsServices;
-    }
-
-    static getInstance(service: PostsServices) {
-        if (!this.instance) { this.instance = new PostsController(service); }
-        return this.instance;
+    constructor(postsServices: PostsServices) {
+        this.postsServices = postsServices;
     }
 
     async index(req: Request, res: Response) {
 
-        const posts = await PostsController.postsServices.getAll();
+        const posts = await this.postsServices.getAll();
 
         return res.render("posts", { posts });
     }
@@ -28,7 +22,7 @@ export class PostsController implements Controller {
 
         if (Number.isNaN(id)) { return res.status(400).send("Bad Request"); }
 
-        return res.send(await PostsController.postsServices.getOne({ id }));
+        return res.send(await this.postsServices.getOne({ id }));
     }
 
     async createOne(req: Request, res: Response) {
@@ -43,7 +37,7 @@ export class PostsController implements Controller {
             date: new Date().toISOString()
         }
 
-        return res.send(await PostsController.postsServices.createOne(post));
+        return res.send(await this.postsServices.createOne(post));
     }
 
     async updateOne(req: Request, res: Response) {
@@ -54,7 +48,7 @@ export class PostsController implements Controller {
         }
 
         return res.send(
-            await PostsController.postsServices.updateOne({ id }, {
+            await this.postsServices.updateOne({ id }, {
                 title: req.body.title,
                 description: req.body.description,
                 body: req.body.body,
@@ -68,6 +62,6 @@ export class PostsController implements Controller {
 
         if (Number.isNaN(id)) { return res.status(400).send("Invalid id") }
 
-        return res.send(await PostsController.postsServices.deleteOne(id));
+        return res.send(await this.postsServices.deleteOne(id));
     }
 }
