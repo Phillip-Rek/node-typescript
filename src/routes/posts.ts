@@ -1,23 +1,24 @@
 import { Router } from "express";
 import { PostsController } from "../controllers/posts.controller";
 import { PostsServices } from "../services/posts.services";
-import { posts } from "../models/posts";
+import { Posts } from "../models/posts";
 
 const PostsRouter = Router();
 
-const postsServices = new PostsServices(posts)
+export const postsModels = new Posts();
 
-const postsController = <PostsController>PostsController.getInstance(postsServices);
+const postsServices = new PostsServices(postsModels);
+
+const postsController = new PostsController(postsServices);
 
 const update = async () => {
     console.log(
-        await postsServices.updateOne(
+        await postsServices.createOne(
             {
-                id: 1,
-                title: 'the time is 15:31',
-            },
-            {
-                title: "updated title on id 1",
+                title: "Phillip Rekhotho",
+                description: "describing phillip rekhotho",
+                body: "more information about phillip rekhotho",
+                date: new Date().toISOString().substring(0, 18).replace("T", " ")
             })
     )
 
